@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Load the JavaScript function "main" stored in the loaded file below -->
+
+<body onload="main()">
+    <!-- Select a JavaScript file -->
+    <script src="project3.js"></script>
+
+    <!-- WebGL Utility Scripts -->
+    <script src="lib/webgl-utils.js"></script>
+    <script src="lib/webgl-debug.js"></script>
+    <script src="lib/cuon-utils.js"></script>
+    <script src="lib/cuon-matrix-quat03.js"></script>
+
+    <!-- Setup the Canvas -->
+    <p>
+        <canvas id="webgl" width="800" height="800">
+            Please use a browser that supports "canvas"
+        </canvas>
+    </p>
+
+    <div id="controls">
+        <h3>Camera Controls</h3>
+        <ul>
+            <li><strong>W</strong>: Move Forward</li>
+            <li><strong>S</strong>: Move Backward</li>
+            <li><strong>A</strong>: Strafe Left</li>
+            <li><strong>D</strong>: Strafe Right</li>
+            <li><strong>Space</strong>: Move Up</li>
+            <li><strong>Shift</strong>: Move Down</li>
+            <li><strong>Arrow Up</strong>: Look Up</li>
+            <li><strong>Arrow Down</strong>: Look Down</li>
+            <li><strong>Arrow Left</strong>: Turn Left</li>
+            <li><strong>Arrow Right</strong>: Turn Right</li>
+            <li><strong>Mouse Drag</strong>: Move altar cube around</li>
+            <li><strong>Toggle Projection</strong>: Switch between Perspective and Orthographic View</li>
+        </ul>
+    </div>
+    
+    <style>
+        #controls {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            max-width: 200px;
+        }
+        #controls h3 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+        #controls ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        #controls li {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+    </style>
+
+    <!-- Slider for light position -->
+    <div>
+        <input type="range" id="sliderLightX" min="-10" max="10" step=".01" />
+        <label id="lightX" for="sliderLightX"></label>
+    </div>
+    <div>
+        <input type="range" id="sliderLightY" min="-10" max="10" step=".01" />
+        <label id="lightY" for="sliderLightY"></label>
+    </div>
+    <div>
+        <input type="range" id="sliderLightZ" min="-10" max="4" step=".01" />
+        <label id="lightZ" for="sliderLightZ"></label>
+    </div>
+    
+    <div>
+        <h3>Altar cube rotation speed</h3>
+        <input type="range" id="rotationSpeedSlider" min="0.1" max="2.0" value="1" step="0.1">
+        <label for="rotationSpeedSlider">Rotation Speed</label>
+    </div>
+
+    <!-- Projective Sliders -->
+    <div>
+        <input type="range" id="sliderNear" min="1" max="4" step=".01" />
+        <label id="near" for="sliderNear"></label>
+    </div>
+    <div>
+        <input type="range" id="sliderFar" min="5" max="40" step=".01" />
+        <label id="far" for="sliderFar"></label>
+    </div>
+    <div>
+        <input type="range" id="sliderFOVY" min="1" max="270" step=".01" />
+        <label id="fovy" for="sliderFOVY"></label>
+    </div>
+    <div>
+        <input type="range" id="sliderAspect" min=".5" max="2" step=".01" />
+        <label id="aspect" for="sliderAspect"></label>
+    </div>
+    <div>
+        <button id="toggleProjection">Toggle Projection (Perspective/Orthographic)</button>
+    </div>
+
+</body>
+
+</html>
