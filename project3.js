@@ -1,5 +1,5 @@
 /**
- * I used chatGPT as well as the code from assignment 6 to aid the making of this project.
+ * I used chatGPT as well as the code from project3startcode and assignment 8 to aid the making of this project.
  */
 
 class SceneNode { 
@@ -297,8 +297,8 @@ const INITIAL_NEAR = 1
 const INITIAL_FAR = 20
 const INITIAL_FOVY = 90
 const INITIAL_ASPECT = 1
-const INITIAL_LIGHT_X = 4
-const INITIAL_LIGHT_Y = 7
+const INITIAL_LIGHT_X = 0//4
+const INITIAL_LIGHT_Y = 0//7
 const INITIAL_LIGHT_Z = 2
 //#endregion
 
@@ -526,7 +526,7 @@ async function main() {
 
     const { mesh: DIAMOND_MESH, meshNormals: DIAMOND_MESH_NORMAL, vertexCount:DIAMOND_VERTEX_COUNT, meshVertexSize:DIAMOND_VERTEX_SIZE} = await loadOBJ('./diamond_with_normals.obj');
     const { mesh: ICOSAHEDRON_MESH, meshNormals: ICOSAHEDRON_MESH_NORMAL, vertexCount:ICOSAHEDRON_VERTEX_COUNT, meshVertexSize:ICOSAHEDRON_VERTEX_SIZE} = await loadOBJ('./icosahedron_with_normals.obj');
-    const { mesh: ALTAR_MESH, meshTexCoords:ALTAR_TEXT_COORDS, meshNormals: ALTAR_MESH_NORMAL, vertexCount:ALTAR_VERTEX_COUNT, meshVertexSize:ALTAR_VERTEX_SIZE} = await loadOBJ("./altar_with_textures.obj");
+    const { mesh: ALTAR_MESH, meshTexCoords:ALTAR_TEXT_COORDS, meshNormals: ALTAR_MESH_NORMAL, vertexCount:ALTAR_VERTEX_COUNT, meshVertexSize:ALTAR_VERTEX_SIZE} = await loadOBJ("./altar.obj");
     const { mesh: MAN_MESH, meshNormals: MAN_MESH_NORMAL, vertexCount: MAN_VERTEX_COUNT, meshVertexSize: MAN_VERTEX_SIZE} = await loadOBJ("./man_with_normal.obj");
     console.log('altar text coord', ALTAR_TEXT_COORDS)
     const { mesh: TAILS_MESH,meshTexCoords:TAILS_TEXT_COORDS, meshNormals: TAILS_NORMAL, vertexCount: TAILS_VERTEX_COUNT, meshVertexSize: TAILS_VERTEX_SIZE} = await loadOBJ("./tails.obj");
@@ -726,7 +726,6 @@ async function main() {
    
 
     let altarNode = await addObject(ALTAR_MESH, ALTAR_VERTEX_COUNT, ALTAR_MESH_NORMAL, false, ALTAR_TEXT_COORDS, "altar",color=blueColor, children=null,rotate={y:45},scale={x:0.8,y:0.8,z:0.8}, translate={x:0, y:-1, z:0})
-    // console.log("alternode", altarNode)
     //#endregion
 
     // Initialize the canvas for dragging functionality
@@ -749,15 +748,6 @@ async function main() {
     g_diffuse_color = gl.getUniformLocation(gl.program, 'u_DiffuseColor')
     g_spec_power = gl.getUniformLocation(gl.program, 'u_SpecPower')
     g_spec_color = gl.getUniformLocation(gl.program, 'u_SpecColor')
-
-    // const normalMatrix = new Matrix4();
-    // normalMatrix.setInverseOf(manNode.worldMatrix);
-    // normalMatrix.transpose();
-    // gl.uniformMatrix4fv(u_NormalMatrix, false, normalMatrix.elements);
-
-    // gl.uniform3f(u_LightPosition, 5.0, 5.0, 5.0);
-    // gl.uniform3f(u_LightColor, 1.0, 1.0, 1.0);
-    // gl.uniform3f(g_ambient_light, 0.2, 0.2, 0.2);
 
     g_texturing_ref = gl.getUniformLocation(gl.program, 'u_texturing')
 
@@ -782,9 +772,6 @@ async function main() {
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA,gl.UNSIGNED_BYTE, image);
         gl.generateMipmap(gl.TEXTURE_2D)
     });
-
-    
-
     
     // Initial values
     updateNear(INITIAL_NEAR)
@@ -831,9 +818,7 @@ async function main() {
 
 
         gl.uniformMatrix4fv(g_camera_ref, false, g_camera_matrix.elements)
-        // var perspective_matrix = new Matrix4().setPerspective(g_fovy, g_aspect, g_near, g_far)
-        // gl.uniformMatrix4fv(g_projection_ref, false, perspective_matrix.elements)
-
+    
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
@@ -1231,8 +1216,6 @@ async function addObject (mesh, vertex_count, normals=null, isTex = false, texCo
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(attribute), gl.STATIC_DRAW);
 
-    // let isTex = texCoord != null ? true : false;
-    // console.log('this node has texture: name', nodeName, "istext", isTex)
     finalColor = color != null ? color : [0.8, 0.5, 0.2]
     var node = new SceneNode(buffer, vertex_count, finalColor, isTex);
     
